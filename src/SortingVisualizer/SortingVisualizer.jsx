@@ -52,7 +52,8 @@ class SortingVisualizer extends React.Component {
     testSortingAlgorithms() {
         for (let i = 0; i < 100; i++) {
             const array = [];
-            for (let i = 0; i < randomIntFromInterval(1, 1000); i++) {
+            const length = randomIntFromInterval(1, 1000);
+            for (let i = 0; i < length; i++) {
                 array.push(randomIntFromInterval(-1000, 1000));
             }
             // copy and sort using javascript built-in sort()
