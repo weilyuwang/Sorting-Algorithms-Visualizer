@@ -1,6 +1,8 @@
 import React from "react";
 import "./SortingVisualizer.css";
 import { getMergeSortAnimations } from "../SortingAlgorithms/mergeSort";
+import { getInsertionSortAnimations } from "../SortingAlgorithms/insertionSort";
+
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "turquoise";
 
@@ -31,34 +33,34 @@ class SortingVisualizer extends React.Component {
         this.resetArray();
     }
 
+    // mergeSort() {
+    //     const { array } = this.state;
+    //     const animations = getMergeSortAnimations(array);
+    //     for (let i = 0; i < animations.length; i++) {
+    //         const arrayBars = document.getElementsByClassName("array-bar");
+    //         const isColorChange = i % 3 !== 2;
+    //         if (isColorChange) {
+    //             const [barOneIndex, barTwoIndex] = animations[i];
+    //             const barOneStyle = arrayBars[barOneIndex].style;
+    //             const barTowStyle = arrayBars[barTwoIndex].style;
+
+    //             const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+
+    //             setTimeout(() => {
+    //                 barOneStyle.backgroundColor = color;
+    //                 barTowStyle.backgroundColor = color;
+    //             }, i * 500);
+    //         } else {
+    //             setTimeout(() => {
+    //                 const [barOneIndex, newHeight] = animations[i];
+    //                 const barOneStyle = arrayBars[barOneIndex].style;
+    //                 barOneStyle.height = `${newHeight}px`;
+    //             }, i * 500);
+    //         }
+    //     }
+    // }
+
     mergeSort() {
-        const { array } = this.state;
-        const animations = getMergeSortAnimations(array);
-        for (let i = 0; i < animations.length; i++) {
-            const arrayBars = document.getElementsByClassName("array-bar");
-            const isColorChange = i % 3 !== 2;
-            if (isColorChange) {
-                const [barOneIndex, barTwoIndex] = animations[i];
-                const barOneStyle = arrayBars[barOneIndex].style;
-                const barTowStyle = arrayBars[barTwoIndex].style;
-
-                const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
-
-                setTimeout(() => {
-                    barOneStyle.backgroundColor = color;
-                    barTowStyle.backgroundColor = color;
-                }, i * 500);
-            } else {
-                setTimeout(() => {
-                    const [barOneIndex, newHeight] = animations[i];
-                    const barOneStyle = arrayBars[barOneIndex].style;
-                    barOneStyle.height = `${newHeight}px`;
-                }, i * 500);
-            }
-        }
-    }
-
-    showMergeSortAnimations() {
         const { array } = this.state;
         const animations = getMergeSortAnimations(array);
         const arrayBars = document.getElementsByClassName("array-bar");
@@ -91,7 +93,30 @@ class SortingVisualizer extends React.Component {
 
     selectionSort() {}
 
-    insertionSort() {}
+    insertionSort() {
+        const { array } = this.state;
+        const animations = getInsertionSortAnimations(array);
+        const arrayBars = document.getElementsByClassName("array-bar");
+        for (let i = 0; i < animations.length; i++) {
+            const isCompare = i % 2 === 0;
+
+            if (isCompare) {
+                const [index1, index2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
+                }, i * 50);
+            } else {
+                const [index1, newHeight1, index2, newHeight2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.height = `${newHeight1}px`;
+                    arrayBars[index2].style.height = `${newHeight2}px`;
+                    arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                }, i * 50);
+            }
+        }
+    }
 
     render() {
         const { array } = this.state;
@@ -110,9 +135,7 @@ class SortingVisualizer extends React.Component {
                     <button onClick={() => this.resetArray()}>
                         Generate New Array
                     </button>
-                    <button onClick={() => this.showMergeSortAnimations()}>
-                        Merge Sort
-                    </button>
+                    <button onClick={() => this.mergeSort()}>Merge Sort</button>
                     <button onClick={() => this.quickSort()}>Quick Sort</button>
                     <button onClick={() => this.heapSort()}>Heap Sort</button>
                     <button onClick={() => this.insertionSort()}>
