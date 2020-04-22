@@ -59,6 +59,54 @@ function mergeSortHelper(
     merge(mainArray, startIndex, midIndex, endIndex, auxArray, animations);
 }
 
+// function merge(
+//     mainArray,
+//     startIndex,
+//     midIndex,
+//     endIndex,
+//     auxArray,
+//     animations
+// ) {
+//     let i = startIndex; // start index of the first half
+//     let j = midIndex + 1; // start index of the second half
+
+//     // copy mainArray to auxArray
+//     for (let k = startIndex; k <= endIndex; k++) {
+//         auxArray[k] = mainArray[k];
+//     }
+
+//     // merge back to mainArray
+//     for (let k = startIndex; k <= endIndex; k++) {
+//         if (i > midIndex) {
+//             // left half exhausted
+//             animations.push([j, j]);
+//             animations.push([j, j]);
+//             animations.push([k, auxArray[j]]);
+//             mainArray[k] = auxArray[j];
+//             j++;
+//         } else if (j > endIndex) {
+//             // right half exhausted
+//             animations.push([i, i]);
+//             animations.push([i, i]);
+//             animations.push([k, auxArray[i]]);
+//             mainArray[k] = auxArray[i];
+//             i++;
+//         } else if (auxArray[i] < auxArray[j]) {
+//             animations.push([i, j]);
+//             animations.push([i, j]);
+//             animations.push([k, auxArray[i]]);
+//             mainArray[k] = auxArray[i];
+//             i++;
+//         } else {
+//             animations.push([i, j]);
+//             animations.push([i, j]);
+//             animations.push([k, auxArray[j]]);
+//             mainArray[k] = auxArray[j];
+//             j++;
+//         }
+//     }
+// }
+
 function merge(
     mainArray,
     startIndex,
@@ -80,25 +128,21 @@ function merge(
         if (i > midIndex) {
             // left half exhausted
             animations.push([j, j]);
-            animations.push([j, j]);
             animations.push([k, auxArray[j]]);
             mainArray[k] = auxArray[j];
             j++;
         } else if (j > endIndex) {
             // right half exhausted
             animations.push([i, i]);
-            animations.push([i, i]);
             animations.push([k, auxArray[i]]);
             mainArray[k] = auxArray[i];
             i++;
         } else if (auxArray[i] < auxArray[j]) {
             animations.push([i, j]);
-            animations.push([i, j]);
             animations.push([k, auxArray[i]]);
             mainArray[k] = auxArray[i];
             i++;
         } else {
-            animations.push([i, j]);
             animations.push([i, j]);
             animations.push([k, auxArray[j]]);
             mainArray[k] = auxArray[j];
