@@ -3,13 +3,20 @@ const selectionSort = (array) => {
 
     for (let i = 0; i < array.length - 1; i++) {
         let smallestIndex = i;
+
         for (let j = i + 1; j < array.length; j++) {
-            if (array[smallestIndex] > array[j]) smallestIndex = j;
+            animations.push([i, j]);
+            if (array[smallestIndex] > array[j]) {
+                smallestIndex = j;
+            }
         }
+
+        animations.push([smallestIndex]);
+        animations.push([i, array[smallestIndex], smallestIndex, array[i]]);
         swap(array, i, smallestIndex);
     }
 
-    return array;
+    return animations;
 };
 
 const swap = (array, i, j) => {
