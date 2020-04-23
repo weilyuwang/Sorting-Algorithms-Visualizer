@@ -2,7 +2,7 @@ import React from "react";
 import "./SortingVisualizer.css";
 import { getMergeSortAnimations } from "../SortingAlgorithms/mergeSort";
 import { getInsertionSortAnimations } from "../SortingAlgorithms/insertionSort";
-
+import { getQuickSortAnimations } from "../SortingAlgorithms/quickSort";
 import getSelectionSortAnimations from "../SortingAlgorithms/selectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/bubbleSort";
 
@@ -67,7 +67,88 @@ class SortingVisualizer extends React.Component {
         }
     }
 
-    quickSort() {}
+    selectionSort() {
+        const { array } = this.state;
+        const animations = getSelectionSortAnimations(array);
+        const arrayBars = document.getElementsByClassName("array-bar");
+        let time = 0;
+        for (let i = 0; i < animations.length; i++) {
+            const isCompare = animations[i].length === 2;
+            const isFoundSmallest = animations[i].length === 1;
+
+            if (isCompare) {
+                const [index1, index2] = animations[i];
+                setTimeout(() => {
+                    // do first
+                    arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
+
+                    setTimeout(function () {
+                        // do second thing
+                        arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                    }, 20);
+                }, time);
+                time += 40;
+            } else if (isFoundSmallest) {
+                const [smallestIndex] = animations[i];
+                setTimeout(() => {
+                    arrayBars[
+                        smallestIndex
+                    ].style.backgroundColor = FOUND_COLOR;
+                }, time);
+                time += 500;
+            } else {
+                const [index1, newHeight1, index2, newHeight2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.height = `${newHeight1}px`;
+                    arrayBars[index2].style.height = `${newHeight2}px`;
+                    arrayBars[index1].style.backgroundColor = SORTED_COLOR;
+                    arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                }, time);
+                time += 50;
+            }
+        }
+    }
+
+    quickSort() {
+        const { array } = this.state;
+        const animations = getQuickSortAnimations(array);
+        const arrayBars = document.getElementsByClassName("array-bar");
+        let time = 0;
+        for (let i = 0; i < animations.length; i++) {
+            const isCompare = animations[i].length === 2;
+            const isFinalPosition = animations[i].length === 1;
+
+            if (isCompare) {
+                const [index1, index2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
+                    setTimeout(function () {
+                        // do second thing
+                        arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                        arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                    }, 20);
+                }, time);
+                time += 40;
+            } else if (isFinalPosition) {
+                const [index] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index].style.backgroundColor = SORTED_COLOR;
+                }, time);
+                time += 500;
+            } else {
+                const [index1, newHeight1, index2, newHeight2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.height = `${newHeight1}px`;
+                    arrayBars[index2].style.height = `${newHeight2}px`;
+                    arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                }, time);
+                time += 50;
+            }
+        }
+    }
 
     heapSort() {}
 
@@ -98,53 +179,6 @@ class SortingVisualizer extends React.Component {
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                 }, i * 30);
-            }
-        }
-    }
-
-    // Working on this
-    selectionSort() {
-        const { array } = this.state;
-        const animations = getSelectionSortAnimations(array);
-        const arrayBars = document.getElementsByClassName("array-bar");
-        let time = 0;
-        for (let i = 0; i < animations.length; i++) {
-            const isCompare = animations[i].length === 2;
-            const isFoundSmallest = animations[i].length === 1;
-
-            if (isCompare) {
-                const [index1, index2] = animations[i];
-                setTimeout(() => {
-                    // do first
-                    arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
-                    arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-
-                    setTimeout(function () {
-                        // do second thing
-                        arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                    }, 20);
-                }, time);
-                time += 40;
-                console.log(time);
-            } else if (isFoundSmallest) {
-                const [smallestIndex] = animations[i];
-                setTimeout(() => {
-                    arrayBars[
-                        smallestIndex
-                    ].style.backgroundColor = FOUND_COLOR;
-                }, time);
-                time += 500;
-                console.log(time);
-            } else {
-                const [index1, newHeight1, index2, newHeight2] = animations[i];
-                setTimeout(() => {
-                    arrayBars[index1].style.height = `${newHeight1}px`;
-                    arrayBars[index2].style.height = `${newHeight2}px`;
-                    arrayBars[index1].style.backgroundColor = SORTED_COLOR;
-                    arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, time);
-                time += 50;
-                console.log(time);
             }
         }
     }
