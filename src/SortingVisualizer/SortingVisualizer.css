@@ -1,10 +1,5 @@
-.array-container {
-    margin-top: 200px;
-    left: 100px;
-}
-
 .array-bar {
-    width: 5px;
+    width: 7px;
     background-color: turquoise;
     display: inline-block;
     margin: 0 3px;

@@ -5,6 +5,7 @@ import { getInsertionSortAnimations } from "../SortingAlgorithms/insertionSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/quickSort";
 import getSelectionSortAnimations from "../SortingAlgorithms/selectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/bubbleSort";
+import { Button, Grid } from "@material-ui/core";
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "turquoise";
@@ -17,6 +18,9 @@ const SORTED_COLOR = "#5fcf8a";
 
 // Found smaller val
 const FOUND_COLOR = "red";
+
+// Num of bars
+const NUM_BARS = 80;
 
 const randomIntFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -32,8 +36,8 @@ class SortingVisualizer extends React.Component {
 
     resetArray() {
         const array = [];
-        for (let i = 0; i < 100; i++) {
-            array.push(randomIntFromInterval(5, 500));
+        for (let i = 0; i < NUM_BARS; i++) {
+            array.push(randomIntFromInterval(10, 600));
         }
         this.setState({ array: array });
     }
@@ -213,7 +217,91 @@ class SortingVisualizer extends React.Component {
         const { array } = this.state;
         return (
             <>
-                <div className="array-container">
+                <div>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        style={{ marginTop: "80px" }}
+                        spacing={3}
+                    >
+                        <Grid item>
+                            <Button
+                                size="small"
+                                onClick={() => this.resetArray()}
+                                variant="contained"
+                                color="primary"
+                            >
+                                Generate New Array
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                onClick={() => this.insertionSort()}
+                                variant="contained"
+                                size="small"
+                            >
+                                Insertion Sort
+                            </Button>
+                        </Grid>
+
+                        <Grid item>
+                            <Button
+                                onClick={() => this.selectionSort()}
+                                variant="contained"
+                                size="small"
+                            >
+                                Selection Sort
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button
+                                onClick={() => this.bubbleSort()}
+                                variant="contained"
+                                size="small"
+                            >
+                                Bubble Sort
+                            </Button>
+                        </Grid>
+
+                        <Grid item>
+                            <Button
+                                onClick={() => this.mergeSort()}
+                                variant="contained"
+                                size="small"
+                            >
+                                Merge Sort
+                            </Button>
+                        </Grid>
+
+                        <Grid item>
+                            <Button
+                                onClick={() => this.quickSort()}
+                                variant="contained"
+                                size="small"
+                            >
+                                Quick Sort
+                            </Button>
+                        </Grid>
+
+                        <Grid item>
+                            <Button
+                                onClick={() => this.heapSort()}
+                                variant="contained"
+                                size="small"
+                            >
+                                Heap Sort
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </div>
+
+                <div
+                    style={{
+                        marginTop: "100px",
+                    }}
+                >
                     {array.map((value, index) => (
                         <div
                             className="array-bar"
@@ -221,23 +309,6 @@ class SortingVisualizer extends React.Component {
                             style={{ height: `${value}px` }}
                         ></div>
                     ))}
-                </div>
-                <div>
-                    <button onClick={() => this.resetArray()}>
-                        Generate New Array
-                    </button>
-                    <button onClick={() => this.mergeSort()}>Merge Sort</button>
-                    <button onClick={() => this.quickSort()}>Quick Sort</button>
-                    <button onClick={() => this.heapSort()}>Heap Sort</button>
-                    <button onClick={() => this.insertionSort()}>
-                        Insertion Sort
-                    </button>
-                    <button onClick={() => this.selectionSort()}>
-                        Selection Sort
-                    </button>
-                    <button onClick={() => this.bubbleSort()}>
-                        Bubble Sort
-                    </button>
                 </div>
             </>
         );
