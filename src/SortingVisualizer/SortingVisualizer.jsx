@@ -15,20 +15,11 @@ import {
 } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
-// This is the main color of the array bars.
 const PRIMARY_COLOR = "turquoise";
-
-// This is the color of array bars that are being compared throughout the animations.
 const SECONDARY_COLOR = "#878684";
-
-// Sorted Color
 const SORTED_COLOR = "#5fcf8a";
-
-// Found smaller val
 const FOUND_COLOR = "red";
-
-// Num of bars
-const NUM_BARS = 90;
+const NUM_BARS = 95;
 
 const randomIntFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -44,7 +35,7 @@ const SortingVisualizer = () => {
         resetArrayColor();
         const newArray = [];
         for (let i = 0; i < NUM_BARS; i++) {
-            newArray.push(randomIntFromInterval(10, 600));
+            newArray.push(randomIntFromInterval(20, 600));
         }
         setArray(newArray);
         setCanClick(true);
@@ -63,7 +54,7 @@ const SortingVisualizer = () => {
             resetArrayColor();
             const newArray = [];
             for (let i = 0; i < NUM_BARS; i++) {
-                newArray.push(randomIntFromInterval(10, 600));
+                newArray.push(randomIntFromInterval(20, 600));
             }
             setArray(newArray);
             setIsRunning(false);
@@ -88,7 +79,6 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
                     setTimeout(function () {
-                        // do second thing
                         arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                         arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                     }, 40 / speed);
@@ -99,7 +89,6 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     arrayBars[index].style.backgroundColor = SECONDARY_COLOR;
                     setTimeout(function () {
-                        // do second thing
                         arrayBars[index].style.backgroundColor = PRIMARY_COLOR;
                     }, 40 / speed);
                 }, time);
@@ -110,7 +99,7 @@ const SortingVisualizer = () => {
                     arrayBars[index].style.height = `${newHeight}px`;
                     arrayBars[index].style.backgroundColor = PRIMARY_COLOR;
                 }, time);
-                time += 100 / speed;
+                time += 80 / speed;
             }
         }
         setTimeout(() => {
@@ -130,12 +119,10 @@ const SortingVisualizer = () => {
             if (isCompare) {
                 const [index1, index2] = animations[i];
                 setTimeout(() => {
-                    // do first
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
 
                     setTimeout(function () {
-                        // do second thing
                         arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                     }, 40 / speed);
                 }, time);
@@ -156,7 +143,7 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = SORTED_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                 }, time);
-                time += 100 / speed;
+                time += 80 / speed;
             }
         }
         setTimeout(() => {
@@ -199,7 +186,7 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                 }, time);
-                time += 100 / speed;
+                time += 80 / speed;
             }
         }
         setTimeout(() => {
@@ -224,13 +211,13 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
                 }, time);
-                time += 120 / speed;
+                time += 60 / speed;
             } else if (isSorted) {
                 const [index] = animations[i];
                 setTimeout(() => {
                     arrayBars[index].style.backgroundColor = SORTED_COLOR;
                 }, time);
-                time += 120 / speed;
+                time += 60 / speed;
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -239,7 +226,7 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                 }, time);
-                time += 120 / speed;
+                time += 60 / speed;
             }
         }
         setTimeout(() => {
@@ -261,7 +248,7 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
                 }, time);
-                time += 120 / speed;
+                time += 60 / speed;
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -270,7 +257,7 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                 }, time);
-                time += 120 / speed;
+                time += 60 / speed;
             }
         }
         setTimeout(() => {
@@ -286,7 +273,7 @@ const SortingVisualizer = () => {
                     direction="row"
                     justify="center"
                     alignItems="center"
-                    style={{ marginTop: "80px" }}
+                    style={{ marginTop: "40px" }}
                     spacing={3}
                 >
                     <Grid item>
@@ -309,6 +296,7 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
+
                                 insertionSort();
                             }}
                             variant="contained"
@@ -324,6 +312,7 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
+
                                 selectionSort();
                             }}
                             variant="contained"
@@ -338,6 +327,7 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
+
                                 bubbleSort();
                             }}
                             variant="contained"
@@ -353,6 +343,7 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
+
                                 mergeSort();
                             }}
                             variant="contained"
@@ -368,6 +359,7 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
+
                                 quickSort();
                             }}
                             variant="contained"
@@ -383,6 +375,7 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
+
                                 heapSort();
                             }}
                             variant="contained"
@@ -407,16 +400,22 @@ const SortingVisualizer = () => {
 
             <div
                 style={{
+                    height: "600px",
                     marginTop: "100px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
                 }}
             >
-                {array.map((value, index) => (
-                    <div
-                        className="array-bar"
-                        key={index}
-                        style={{ height: `${value}px` }}
-                    ></div>
-                ))}
+                <Container style={{ alignSelf: "end" }}>
+                    {array.map((value, index) => (
+                        <div
+                            className="array-bar"
+                            key={index}
+                            style={{ height: `${value}px` }}
+                        ></div>
+                    ))}
+                </Container>
             </div>
         </Container>
     );
