@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./SortingVisualizer.css";
 import { getMergeSortAnimations } from "../SortingAlgorithms/mergeSort";
 import { getInsertionSortAnimations } from "../SortingAlgorithms/insertionSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/quickSort";
 import getSelectionSortAnimations from "../SortingAlgorithms/selectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/bubbleSort";
-import { Button, Grid, Fab } from "@material-ui/core";
+import {
+    Button,
+    Grid,
+    Fab,
+    Container,
+    Typography,
+    Slider,
+} from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 
 // This is the main color of the array bars.
@@ -27,29 +34,34 @@ const randomIntFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-class SortingVisualizer extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            array: [],
-        };
-    }
+const SortingVisualizer = () => {
+    const [array, setArray] = useState([]);
+    const [speed, setSpeed] = useState(10);
+    const [isRunning, setIsRunning] = useState(false);
 
-    resetArray() {
-        const array = [];
-        for (let i = 0; i < NUM_BARS; i++) {
-            array.push(randomIntFromInterval(10, 600));
+    const resetArray = () => {
+        const arrayBars = document.getElementsByClassName("array-bar");
+        console.log(arrayBars);
+
+        for (const bar of arrayBars) {
+            bar.style.backgroundColor = PRIMARY_COLOR;
         }
-        this.setState({ array: array });
-    }
 
-    componentDidMount() {
-        this.resetArray();
-    }
+        const newArray = [];
+        for (let i = 0; i < NUM_BARS; i++) {
+            newArray.push(randomIntFromInterval(10, 600));
+        }
+        setArray(newArray);
+        setIsRunning(false);
+    };
 
-    mergeSort() {
-        const { array } = this.state;
-        const animations = getMergeSortAnimations(array);
+    useEffect(() => {
+        resetArray();
+    }, []);
+
+    const mergeSort = () => {
+        const arrayCopy = array.slice();
+        const animations = getMergeSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
         for (let i = 0; i < animations.length; i++) {
             const isCompare = i % 2 === 0;
@@ -70,11 +82,11 @@ class SortingVisualizer extends React.Component {
                 }, i * 50);
             }
         }
-    }
+    };
 
-    selectionSort() {
-        const { array } = this.state;
-        const animations = getSelectionSortAnimations(array);
+    const selectionSort = () => {
+        const arrayCopy = array.slice();
+        const animations = getSelectionSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
         let time = 0;
         for (let i = 0; i < animations.length; i++) {
@@ -113,11 +125,11 @@ class SortingVisualizer extends React.Component {
                 time += 50;
             }
         }
-    }
+    };
 
-    quickSort() {
-        const { array } = this.state;
-        const animations = getQuickSortAnimations(array);
+    const quickSort = () => {
+        const arrayCopy = array.slice();
+        const animations = getQuickSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
         let time = 0;
         for (let i = 0; i < animations.length; i++) {
@@ -153,13 +165,13 @@ class SortingVisualizer extends React.Component {
                 time += 50;
             }
         }
-    }
+    };
 
-    heapSort() {}
+    const heapSort = () => {};
 
-    bubbleSort() {
-        const { array } = this.state;
-        const animations = getBubbleSortAnimations(array);
+    const bubbleSort = () => {
+        const arrayCopy = array.slice();
+        const animations = getBubbleSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
         for (let i = 0; i < animations.length; i++) {
             const isCompare = animations[i].length === 2;
@@ -186,12 +198,11 @@ class SortingVisualizer extends React.Component {
                 }, i * 30);
             }
         }
-    }
+    };
 
-    // Done
-    insertionSort() {
-        const { array } = this.state;
-        const animations = getInsertionSortAnimations(array);
+    const insertionSort = () => {
+        const arrayCopy = array.slice();
+        const animations = getInsertionSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
         for (let i = 0; i < animations.length; i++) {
             const isCompare = i % 2 === 0;
@@ -212,108 +223,142 @@ class SortingVisualizer extends React.Component {
                 }, i * 30);
             }
         }
-    }
+    };
 
-    render() {
-        const { array } = this.state;
-        return (
-            <>
-                <div>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                        style={{ marginTop: "80px" }}
-                        spacing={3}
-                    >
-                        <Grid item>
-                            <Fab
-                                color="primary"
-                                aria-label="add"
-                                onClick={() => this.resetArray()}
-                            >
-                                <RefreshIcon fontSize="large" />
-                            </Fab>
-                        </Grid>
-
-                        <Grid item>
-                            <Button
-                                onClick={() => this.insertionSort()}
-                                variant="contained"
-                                size="small"
-                            >
-                                Insertion Sort
-                            </Button>
-                        </Grid>
-
-                        <Grid item>
-                            <Button
-                                onClick={() => this.selectionSort()}
-                                variant="contained"
-                                size="small"
-                            >
-                                Selection Sort
-                            </Button>
-                        </Grid>
-                        <Grid item>
-                            <Button
-                                onClick={() => this.bubbleSort()}
-                                variant="contained"
-                                size="small"
-                            >
-                                Bubble Sort
-                            </Button>
-                        </Grid>
-
-                        <Grid item>
-                            <Button
-                                onClick={() => this.mergeSort()}
-                                variant="contained"
-                                size="small"
-                            >
-                                Merge Sort
-                            </Button>
-                        </Grid>
-
-                        <Grid item>
-                            <Button
-                                onClick={() => this.quickSort()}
-                                variant="contained"
-                                size="small"
-                            >
-                                Quick Sort
-                            </Button>
-                        </Grid>
-
-                        <Grid item>
-                            <Button
-                                onClick={() => this.heapSort()}
-                                variant="contained"
-                                size="small"
-                            >
-                                Heap Sort
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </div>
-
-                <div
-                    style={{
-                        marginTop: "100px",
-                    }}
+    return (
+        <Container>
+            <div>
+                <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                    style={{ marginTop: "80px" }}
+                    spacing={3}
                 >
-                    {array.map((value, index) => (
-                        <div
-                            className="array-bar"
-                            key={index}
-                            style={{ height: `${value}px` }}
-                        ></div>
-                    ))}
-                </div>
-            </>
-        );
-    }
-}
+                    <Grid item>
+                        <Fab
+                            color="primary"
+                            aria-label="add"
+                            onClick={() => resetArray()}
+                        >
+                            <RefreshIcon fontSize="large" />
+                        </Fab>
+                    </Grid>
+
+                    <Grid item>
+                        <Button
+                            disabled={isRunning}
+                            onClick={() => {
+                                setIsRunning(true);
+                                insertionSort();
+                            }}
+                            variant="contained"
+                            size="small"
+                        >
+                            Insertion Sort
+                        </Button>
+                    </Grid>
+
+                    <Grid item>
+                        <Button
+                            disabled={isRunning}
+                            onClick={() => {
+                                setIsRunning(true);
+                                selectionSort();
+                            }}
+                            variant="contained"
+                            size="small"
+                        >
+                            Selection Sort
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            disabled={isRunning}
+                            onClick={() => {
+                                setIsRunning(true);
+                                bubbleSort();
+                            }}
+                            variant="contained"
+                            size="small"
+                        >
+                            Bubble Sort
+                        </Button>
+                    </Grid>
+
+                    <Grid item>
+                        <Button
+                            disabled={isRunning}
+                            onClick={() => {
+                                setIsRunning(true);
+                                mergeSort();
+                            }}
+                            variant="contained"
+                            size="small"
+                        >
+                            Merge Sort
+                        </Button>
+                    </Grid>
+
+                    <Grid item>
+                        <Button
+                            disabled={isRunning}
+                            onClick={() => {
+                                setIsRunning(true);
+                                quickSort();
+                            }}
+                            variant="contained"
+                            size="small"
+                        >
+                            Quick Sort
+                        </Button>
+                    </Grid>
+
+                    <Grid item>
+                        <Button
+                            disabled={isRunning}
+                            onClick={() => {
+                                setIsRunning(true);
+                                heapSort();
+                            }}
+                            variant="contained"
+                            size="small"
+                        >
+                            Heap Sort
+                        </Button>
+                    </Grid>
+
+                    <Grid item xs={2}>
+                        <Typography id="disabled-slider" gutterBottom>
+                            Speed
+                        </Typography>
+                        <Slider
+                            disabled={isRunning}
+                            defaultValue={40}
+                            max={100}
+                            min={10}
+                            onChange={(event, value) => setSpeed(value)}
+                        />
+                    </Grid>
+                </Grid>
+            </div>
+
+            <div
+                style={{
+                    marginTop: "100px",
+                }}
+            >
+                {array.map((value, index) => (
+                    <div
+                        className="array-bar"
+                        key={index}
+                        style={{ height: `${value}px` }}
+                    ></div>
+                ))}
+            </div>
+        </Container>
+    );
+};
 
 export default SortingVisualizer;
