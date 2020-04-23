@@ -4,6 +4,7 @@ import { getMergeSortAnimations } from "../SortingAlgorithms/mergeSort";
 import { getInsertionSortAnimations } from "../SortingAlgorithms/insertionSort";
 
 import getSelectionSortAnimations from "../SortingAlgorithms/selectionSort";
+import getBubbleSortAnimations from "../SortingAlgorithms/bubbleSort";
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "turquoise";
@@ -70,7 +71,36 @@ class SortingVisualizer extends React.Component {
 
     heapSort() {}
 
-    bubbleSort() {}
+    bubbleSort() {
+        const { array } = this.state;
+        const animations = getBubbleSortAnimations(array);
+        const arrayBars = document.getElementsByClassName("array-bar");
+        for (let i = 0; i < animations.length; i++) {
+            const isCompare = animations[i].length === 2;
+            const isSorted = animations[i].length === 1;
+
+            if (isCompare) {
+                const [index1, index2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
+                }, i * 30);
+            } else if (isSorted) {
+                const [index] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index].style.backgroundColor = SORTED_COLOR;
+                }, i * 30);
+            } else {
+                const [index1, newHeight1, index2, newHeight2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.height = `${newHeight1}px`;
+                    arrayBars[index2].style.height = `${newHeight2}px`;
+                    arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                }, i * 30);
+            }
+        }
+    }
 
     // Working on this
     selectionSort() {
@@ -132,7 +162,7 @@ class SortingVisualizer extends React.Component {
                 setTimeout(() => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-                }, i * 50);
+                }, i * 30);
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -140,7 +170,7 @@ class SortingVisualizer extends React.Component {
                     arrayBars[index2].style.height = `${newHeight2}px`;
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, i * 50);
+                }, i * 30);
             }
         }
     }
