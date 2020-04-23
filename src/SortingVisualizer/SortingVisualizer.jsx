@@ -5,7 +5,8 @@ import { getInsertionSortAnimations } from "../SortingAlgorithms/insertionSort";
 import { getQuickSortAnimations } from "../SortingAlgorithms/quickSort";
 import getSelectionSortAnimations from "../SortingAlgorithms/selectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/bubbleSort";
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, Fab } from "@material-ui/core";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "turquoise";
@@ -227,15 +228,15 @@ class SortingVisualizer extends React.Component {
                         spacing={3}
                     >
                         <Grid item>
-                            <Button
-                                size="small"
-                                onClick={() => this.resetArray()}
-                                variant="contained"
+                            <Fab
                                 color="primary"
+                                aria-label="add"
+                                onClick={() => this.resetArray()}
                             >
-                                Generate New Array
-                            </Button>
+                                <RefreshIcon fontSize="large" />
+                            </Fab>
                         </Grid>
+
                         <Grid item>
                             <Button
                                 onClick={() => this.insertionSort()}
