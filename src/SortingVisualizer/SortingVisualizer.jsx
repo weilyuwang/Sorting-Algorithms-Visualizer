@@ -40,14 +40,13 @@ const SortingVisualizer = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [canClick, setCanClick] = useState(true);
 
-    const resetArray = () => {
+    const refreshArray = () => {
         resetArrayColor();
         const newArray = [];
         for (let i = 0; i < NUM_BARS; i++) {
             newArray.push(randomIntFromInterval(10, 600));
         }
         setArray(newArray);
-        setIsRunning(false);
         setCanClick(true);
     };
 
@@ -60,6 +59,16 @@ const SortingVisualizer = () => {
     };
 
     useEffect(() => {
+        const resetArray = () => {
+            resetArrayColor();
+            const newArray = [];
+            for (let i = 0; i < NUM_BARS; i++) {
+                newArray.push(randomIntFromInterval(10, 600));
+            }
+            setArray(newArray);
+            setIsRunning(false);
+            setCanClick(true);
+        };
         resetArray();
         console.log("UseEffect: resetArray() called.");
     }, []);
@@ -285,7 +294,7 @@ const SortingVisualizer = () => {
                             color="primary"
                             aria-label="add"
                             onClick={() => {
-                                resetArray();
+                                refreshArray();
                                 setCanClick(true);
                             }}
                             disabled={isRunning}
