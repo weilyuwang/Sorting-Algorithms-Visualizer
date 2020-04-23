@@ -36,7 +36,7 @@ const randomIntFromInterval = (min, max) => {
 
 const SortingVisualizer = () => {
     const [array, setArray] = useState([]);
-    const [speed, setSpeed] = useState(3);
+    const [speed, setSpeed] = useState(5);
     const [isRunning, setIsRunning] = useState(false);
     const [canClick, setCanClick] = useState(true);
 
@@ -68,25 +68,45 @@ const SortingVisualizer = () => {
         const arrayCopy = array.slice();
         const animations = getMergeSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
+        let time = 0;
         for (let i = 0; i < animations.length; i++) {
-            const isCompare = i % 2 === 0;
+            const isCompare = animations[i].length === 2;
+            const isAppending = animations[i].length === 1;
 
             if (isCompare) {
                 const [index1, index2] = animations[i];
                 setTimeout(() => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-                }, (i * 100) / speed);
+                    setTimeout(function () {
+                        // do second thing
+                        arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                        arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                    }, 40 / speed);
+                }, time);
+                time += 80 / speed;
+            } else if (isAppending) {
+                const [index] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index].style.backgroundColor = SECONDARY_COLOR;
+                    setTimeout(function () {
+                        // do second thing
+                        arrayBars[index].style.backgroundColor = PRIMARY_COLOR;
+                    }, 40 / speed);
+                }, time);
+                time += 80 / speed;
             } else {
-                const [index1, index2] = animations[i - 1];
                 const [index, newHeight] = animations[i];
                 setTimeout(() => {
                     arrayBars[index].style.height = `${newHeight}px`;
-                    arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
-                    arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, (i * 100) / speed);
+                    arrayBars[index].style.backgroundColor = PRIMARY_COLOR;
+                }, time);
+                time += 100 / speed;
             }
         }
+        setTimeout(() => {
+            setIsRunning(false);
+        }, time);
     };
 
     const selectionSort = () => {
@@ -354,8 +374,8 @@ const SortingVisualizer = () => {
                         <Typography id="disabled-slider">Speed</Typography>
                         <Slider
                             disabled={isRunning || !canClick}
-                            defaultValue={3}
-                            max={10}
+                            defaultValue={5}
+                            max={15}
                             min={1}
                             onChange={(event, value) => setSpeed(value)}
                         />

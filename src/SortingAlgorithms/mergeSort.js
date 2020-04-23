@@ -49,24 +49,24 @@ function merge(
     for (let k = startIndex; k <= endIndex; k++) {
         if (i > midIndex) {
             // left half exhausted
-            animations.push([j, j]);
-            animations.push([k, auxArray[j]]);
+            animations.push([j]);
+            animations.push([k, auxArray[j], 0]);
             mainArray[k] = auxArray[j];
             j++;
         } else if (j > endIndex) {
             // right half exhausted
-            animations.push([i, i]);
-            animations.push([k, auxArray[i]]);
+            animations.push([i]);
+            animations.push([k, auxArray[i], 0]);
             mainArray[k] = auxArray[i];
             i++;
         } else if (auxArray[i] < auxArray[j]) {
             animations.push([i, j]);
-            animations.push([k, auxArray[i]]);
+            animations.push([k, auxArray[i], 0]);
             mainArray[k] = auxArray[i];
             i++;
         } else {
             animations.push([i, j]);
-            animations.push([k, auxArray[j]]);
+            animations.push([k, auxArray[j], 0]);
             mainArray[k] = auxArray[j];
             j++;
         }
