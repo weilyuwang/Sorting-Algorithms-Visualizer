@@ -28,7 +28,7 @@ const SORTED_COLOR = "#5fcf8a";
 const FOUND_COLOR = "red";
 
 // Num of bars
-const NUM_BARS = 80;
+const NUM_BARS = 90;
 
 const randomIntFromInterval = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -36,27 +36,32 @@ const randomIntFromInterval = (min, max) => {
 
 const SortingVisualizer = () => {
     const [array, setArray] = useState([]);
-    const [speed, setSpeed] = useState(10);
+    const [speed, setSpeed] = useState(3);
     const [isRunning, setIsRunning] = useState(false);
+    const [canClick, setCanClick] = useState(true);
 
     const resetArray = () => {
-        const arrayBars = document.getElementsByClassName("array-bar");
-        console.log(arrayBars);
-
-        for (const bar of arrayBars) {
-            bar.style.backgroundColor = PRIMARY_COLOR;
-        }
-
+        resetArrayColor();
         const newArray = [];
         for (let i = 0; i < NUM_BARS; i++) {
             newArray.push(randomIntFromInterval(10, 600));
         }
         setArray(newArray);
         setIsRunning(false);
+        setCanClick(true);
+    };
+
+    const resetArrayColor = () => {
+        const arrayBars = document.getElementsByClassName("array-bar");
+
+        for (const bar of arrayBars) {
+            bar.style.backgroundColor = PRIMARY_COLOR;
+        }
     };
 
     useEffect(() => {
         resetArray();
+        console.log("UseEffect: resetArray() called.");
     }, []);
 
     const mergeSort = () => {
@@ -71,7 +76,7 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-                }, i * 50);
+                }, (i * 100) / speed);
             } else {
                 const [index1, index2] = animations[i - 1];
                 const [index, newHeight] = animations[i];
@@ -79,7 +84,7 @@ const SortingVisualizer = () => {
                     arrayBars[index].style.height = `${newHeight}px`;
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, i * 50);
+                }, (i * 100) / speed);
             }
         }
     };
@@ -103,9 +108,9 @@ const SortingVisualizer = () => {
                     setTimeout(function () {
                         // do second thing
                         arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                    }, 20);
+                    }, 40 / speed);
                 }, time);
-                time += 40;
+                time += 80 / speed;
             } else if (isFoundSmallest) {
                 const [smallestIndex] = animations[i];
                 setTimeout(() => {
@@ -113,7 +118,7 @@ const SortingVisualizer = () => {
                         smallestIndex
                     ].style.backgroundColor = FOUND_COLOR;
                 }, time);
-                time += 500;
+                time += 1000 / speed;
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -122,9 +127,12 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = SORTED_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                 }, time);
-                time += 50;
+                time += 100 / speed;
             }
         }
+        setTimeout(() => {
+            setIsRunning(false);
+        }, time);
     };
 
     const quickSort = () => {
@@ -145,15 +153,15 @@ const SortingVisualizer = () => {
                         // do second thing
                         arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                         arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                    }, 20);
+                    }, 40 / speed);
                 }, time);
-                time += 40;
+                time += 80 / speed;
             } else if (isFinalPosition) {
                 const [index] = animations[i];
                 setTimeout(() => {
                     arrayBars[index].style.backgroundColor = SORTED_COLOR;
                 }, time);
-                time += 500;
+                time += 1000 / speed;
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -162,9 +170,12 @@ const SortingVisualizer = () => {
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
                 }, time);
-                time += 50;
+                time += 100 / speed;
             }
         }
+        setTimeout(() => {
+            setIsRunning(false);
+        }, time);
     };
 
     const heapSort = () => {};
@@ -182,12 +193,12 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-                }, i * 30);
+                }, (i * 80) / speed);
             } else if (isSorted) {
                 const [index] = animations[i];
                 setTimeout(() => {
                     arrayBars[index].style.backgroundColor = SORTED_COLOR;
-                }, i * 30);
+                }, (i * 80) / speed);
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -195,7 +206,7 @@ const SortingVisualizer = () => {
                     arrayBars[index2].style.height = `${newHeight2}px`;
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, i * 30);
+                }, (i * 80) / speed);
             }
         }
     };
@@ -212,7 +223,7 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-                }, i * 30);
+                }, (i * 80) / speed);
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -220,7 +231,7 @@ const SortingVisualizer = () => {
                     arrayBars[index2].style.height = `${newHeight2}px`;
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, i * 30);
+                }, (i * 80) / speed);
             }
         }
     };
@@ -240,7 +251,11 @@ const SortingVisualizer = () => {
                         <Fab
                             color="primary"
                             aria-label="add"
-                            onClick={() => resetArray()}
+                            onClick={() => {
+                                resetArray();
+                                setCanClick(true);
+                            }}
+                            disabled={isRunning}
                         >
                             <RefreshIcon fontSize="large" />
                         </Fab>
@@ -248,9 +263,10 @@ const SortingVisualizer = () => {
 
                     <Grid item>
                         <Button
-                            disabled={isRunning}
+                            disabled={isRunning || !canClick}
                             onClick={() => {
                                 setIsRunning(true);
+                                setCanClick(false);
                                 insertionSort();
                             }}
                             variant="contained"
@@ -262,9 +278,10 @@ const SortingVisualizer = () => {
 
                     <Grid item>
                         <Button
-                            disabled={isRunning}
+                            disabled={isRunning || !canClick}
                             onClick={() => {
                                 setIsRunning(true);
+                                setCanClick(false);
                                 selectionSort();
                             }}
                             variant="contained"
@@ -275,9 +292,10 @@ const SortingVisualizer = () => {
                     </Grid>
                     <Grid item>
                         <Button
-                            disabled={isRunning}
+                            disabled={isRunning || !canClick}
                             onClick={() => {
                                 setIsRunning(true);
+                                setCanClick(false);
                                 bubbleSort();
                             }}
                             variant="contained"
@@ -289,9 +307,10 @@ const SortingVisualizer = () => {
 
                     <Grid item>
                         <Button
-                            disabled={isRunning}
+                            disabled={isRunning || !canClick}
                             onClick={() => {
                                 setIsRunning(true);
+                                setCanClick(false);
                                 mergeSort();
                             }}
                             variant="contained"
@@ -303,9 +322,10 @@ const SortingVisualizer = () => {
 
                     <Grid item>
                         <Button
-                            disabled={isRunning}
+                            disabled={isRunning || !canClick}
                             onClick={() => {
                                 setIsRunning(true);
+                                setCanClick(false);
                                 quickSort();
                             }}
                             variant="contained"
@@ -317,9 +337,10 @@ const SortingVisualizer = () => {
 
                     <Grid item>
                         <Button
-                            disabled={isRunning}
+                            disabled={isRunning || !canClick}
                             onClick={() => {
                                 setIsRunning(true);
+                                setCanClick(false);
                                 heapSort();
                             }}
                             variant="contained"
@@ -330,14 +351,12 @@ const SortingVisualizer = () => {
                     </Grid>
 
                     <Grid item xs={2}>
-                        <Typography id="disabled-slider" gutterBottom>
-                            Speed
-                        </Typography>
+                        <Typography id="disabled-slider">Speed</Typography>
                         <Slider
-                            disabled={isRunning}
-                            defaultValue={40}
-                            max={100}
-                            min={10}
+                            disabled={isRunning || !canClick}
+                            defaultValue={3}
+                            max={10}
+                            min={1}
                             onChange={(event, value) => setSpeed(value)}
                         />
                     </Grid>
