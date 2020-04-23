@@ -204,6 +204,7 @@ const SortingVisualizer = () => {
         const arrayCopy = array.slice();
         const animations = getBubbleSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
+        let time = 0;
         for (let i = 0; i < animations.length; i++) {
             const isCompare = animations[i].length === 2;
             const isSorted = animations[i].length === 1;
@@ -213,12 +214,14 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-                }, (i * 80) / speed);
+                }, time);
+                time += 120 / speed;
             } else if (isSorted) {
                 const [index] = animations[i];
                 setTimeout(() => {
                     arrayBars[index].style.backgroundColor = SORTED_COLOR;
-                }, (i * 80) / speed);
+                }, time);
+                time += 120 / speed;
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -226,15 +229,20 @@ const SortingVisualizer = () => {
                     arrayBars[index2].style.height = `${newHeight2}px`;
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, (i * 80) / speed);
+                }, time);
+                time += 120 / speed;
             }
         }
+        setTimeout(() => {
+            setIsRunning(false);
+        }, time);
     };
 
     const insertionSort = () => {
         const arrayCopy = array.slice();
         const animations = getInsertionSortAnimations(arrayCopy);
         const arrayBars = document.getElementsByClassName("array-bar");
+        let time = 0;
         for (let i = 0; i < animations.length; i++) {
             const isCompare = i % 2 === 0;
 
@@ -243,7 +251,8 @@ const SortingVisualizer = () => {
                 setTimeout(() => {
                     arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
                     arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
-                }, (i * 80) / speed);
+                }, time);
+                time += 120 / speed;
             } else {
                 const [index1, newHeight1, index2, newHeight2] = animations[i];
                 setTimeout(() => {
@@ -251,9 +260,13 @@ const SortingVisualizer = () => {
                     arrayBars[index2].style.height = `${newHeight2}px`;
                     arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
                     arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
-                }, (i * 80) / speed);
+                }, time);
+                time += 120 / speed;
             }
         }
+        setTimeout(() => {
+            setIsRunning(false);
+        }, time);
     };
 
     return (
