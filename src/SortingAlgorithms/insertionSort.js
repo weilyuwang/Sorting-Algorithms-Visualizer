@@ -1,4 +1,4 @@
-export function getInsertionSortAnimations(array) {
+const getInsertionSortAnimations = (array) => {
     const animations = [];
     for (let i = 1; i < array.length; i++) {
         let j = i;
@@ -11,10 +11,12 @@ export function getInsertionSortAnimations(array) {
     }
 
     return animations;
-}
+};
 
 const swap = (array, i, j) => {
     const temp = array[j];
     array[j] = array[i];
     array[i] = temp;
 };
+
+export default getInsertionSortAnimations;

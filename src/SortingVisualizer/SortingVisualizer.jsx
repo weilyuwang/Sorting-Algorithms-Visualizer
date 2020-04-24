@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./SortingVisualizer.css";
-import { getMergeSortAnimations } from "../SortingAlgorithms/mergeSort";
-import { getInsertionSortAnimations } from "../SortingAlgorithms/insertionSort";
-import { getQuickSortAnimations } from "../SortingAlgorithms/quickSort";
+import getMergeSortAnimations from "../SortingAlgorithms/mergeSort";
+import getInsertionSortAnimations from "../SortingAlgorithms/insertionSort";
+import getQuickSortAnimations from "../SortingAlgorithms/quickSort";
 import getSelectionSortAnimations from "../SortingAlgorithms/selectionSort";
 import getBubbleSortAnimations from "../SortingAlgorithms/bubbleSort";
+import getHeapSortAnimations from "../SortingAlgorithms/heapSort";
 import {
     Button,
     Grid,
@@ -194,7 +195,55 @@ const SortingVisualizer = () => {
         }, time);
     };
 
-    const heapSort = () => {};
+    const heapSort = () => {
+        const arrayCopy = array.slice();
+        const animations = getHeapSortAnimations(arrayCopy);
+        const arrayBars = document.getElementsByClassName("array-bar");
+        let time = 0;
+        for (let i = 0; i < animations.length; i++) {
+            const isCompare = animations[i].length === 2;
+            const isSorted = animations[i].length === 5;
+
+            if (isCompare) {
+                const [index1, index2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.backgroundColor = SECONDARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = SECONDARY_COLOR;
+                    setTimeout(function () {
+                        arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                        arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                    }, 40 / speed);
+                }, time);
+                time += 80 / speed;
+            } else if (isSorted) {
+                const [index1, newHeight1, index2, newHeight2] = animations[i];
+
+                setTimeout(() => {
+                    arrayBars[index1].style.backgroundColor = FOUND_COLOR;
+
+                    setTimeout(() => {
+                        arrayBars[index1].style.height = `${newHeight1}px`;
+                        arrayBars[index2].style.height = `${newHeight2}px`;
+                        arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                        arrayBars[index2].style.backgroundColor = SORTED_COLOR;
+                    }, 400 / speed);
+                }, time);
+                time += 440 / speed;
+            } else {
+                const [index1, newHeight1, index2, newHeight2] = animations[i];
+                setTimeout(() => {
+                    arrayBars[index1].style.height = `${newHeight1}px`;
+                    arrayBars[index2].style.height = `${newHeight2}px`;
+                    arrayBars[index1].style.backgroundColor = PRIMARY_COLOR;
+                    arrayBars[index2].style.backgroundColor = PRIMARY_COLOR;
+                }, time);
+                time += 80 / speed;
+            }
+        }
+        setTimeout(() => {
+            setIsRunning(false);
+        }, time);
+    };
 
     const bubbleSort = () => {
         const arrayCopy = array.slice();

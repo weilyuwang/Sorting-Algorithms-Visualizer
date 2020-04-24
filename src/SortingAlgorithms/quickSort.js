@@ -1,8 +1,8 @@
-export function getQuickSortAnimations(array) {
+const getQuickSortAnimations = (array) => {
     const animations = [];
     quickSortHelper(array, 0, array.length - 1, animations);
     return animations;
-}
+};
 
 const quickSortHelper = (array, l, r, animations) => {
     if (r <= l) return array;
@@ -36,3 +36,5 @@ const swap = (array, i, j) => {
     array[j] = array[i];
     array[i] = temp;
 };
+
+export default getQuickSortAnimations;

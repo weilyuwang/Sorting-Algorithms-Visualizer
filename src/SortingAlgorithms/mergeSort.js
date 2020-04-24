@@ -1,4 +1,4 @@
-export function getMergeSortAnimations(array) {
+const getMergeSortAnimations = (array) => {
     const animations = [];
 
     if (array.length <= 1) return array;
@@ -7,15 +7,15 @@ export function getMergeSortAnimations(array) {
     mergeSortHelper(array, 0, array.length - 1, auxArray, animations);
 
     return animations;
-}
+};
 
-function mergeSortHelper(
+const mergeSortHelper = (
     mainArray,
     startIndex,
     endIndex,
     auxArray,
     animations
-) {
+) => {
     if (startIndex >= endIndex) return;
     const midIndex = startIndex + Math.floor((endIndex - startIndex) / 2);
 
@@ -27,16 +27,16 @@ function mergeSortHelper(
 
     // merge
     merge(mainArray, startIndex, midIndex, endIndex, auxArray, animations);
-}
+};
 
-function merge(
+const merge = (
     mainArray,
     startIndex,
     midIndex,
     endIndex,
     auxArray,
     animations
-) {
+) => {
     let i = startIndex; // start index of the first half
     let j = midIndex + 1; // start index of the second half
 
@@ -71,4 +71,6 @@ function merge(
             j++;
         }
     }
-}
+};
+
+export default getMergeSortAnimations;
