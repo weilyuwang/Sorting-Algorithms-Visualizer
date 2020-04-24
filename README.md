@@ -6,7 +6,7 @@ And it is still being developed at the moment.
 
 ---
 
-### Visualize 6 famous sorting algorithms:
+### Visualization of 6 fundamental sorting algorithms:
 
 #### Heap Sort
 
