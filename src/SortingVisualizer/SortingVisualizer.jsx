@@ -296,11 +296,11 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
-
                                 insertionSort();
                             }}
                             variant="contained"
                             size="small"
+                            style={{ fontWeight: "bold" }}
                         >
                             Insertion Sort
                         </Button>
@@ -312,11 +312,11 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
-
                                 selectionSort();
                             }}
                             variant="contained"
                             size="small"
+                            style={{ fontWeight: "bold" }}
                         >
                             Selection Sort
                         </Button>
@@ -327,11 +327,11 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
-
                                 bubbleSort();
                             }}
                             variant="contained"
                             size="small"
+                            style={{ fontWeight: "bold" }}
                         >
                             Bubble Sort
                         </Button>
@@ -343,11 +343,11 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
-
                                 mergeSort();
                             }}
                             variant="contained"
                             size="small"
+                            style={{ fontWeight: "bold" }}
                         >
                             Merge Sort
                         </Button>
@@ -359,11 +359,11 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
-
                                 quickSort();
                             }}
                             variant="contained"
                             size="small"
+                            style={{ fontWeight: "bold" }}
                         >
                             Quick Sort
                         </Button>
@@ -375,18 +375,23 @@ const SortingVisualizer = () => {
                             onClick={() => {
                                 setIsRunning(true);
                                 setCanClick(false);
-
                                 heapSort();
                             }}
                             variant="contained"
                             size="small"
+                            style={{ fontWeight: "bold" }}
                         >
                             Heap Sort
                         </Button>
                     </Grid>
 
                     <Grid item xs={2}>
-                        <Typography id="disabled-slider">Speed</Typography>
+                        <Typography
+                            id="disabled-slider"
+                            style={{ fontWeight: "bold" }}
+                        >
+                            Speed
+                        </Typography>
                         <Slider
                             disabled={isRunning || !canClick}
                             defaultValue={5}
