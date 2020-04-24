@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+<img src="public/home.png">
+
+---
+
 ### Visualize 6 famous sorting algorithms:
 
 #### Heap Sort
