@@ -1,7 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). 
 
-And it is still being developed at the moment...
-There will be code refactorings and more features added in.
+And it is still being developed at the moment.
 
 <img src="public/home.png">
 
