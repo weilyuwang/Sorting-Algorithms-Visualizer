@@ -4,16 +4,7 @@
 
 ### Visualization of 6 fundamental sorting algorithms:
 
-#### Heap Sort
+> Heap Sort, Quick Sort, Merge Sort, Insertion Sort, Selection Sort, Bubble Sort
 
-#### Quick Sort
-
-#### Merge Sort
-
-#### Insertion Sort
-
-#### Selection Sort
-
-#### Bubble Sort
-
+### Live App
 Check it @ https://weilyu-sort-visualizer.now.sh
